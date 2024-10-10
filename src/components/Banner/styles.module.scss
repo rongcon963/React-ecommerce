@@ -1,0 +1,36 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variable.module.scss';
+
+/*
+  .container {
+    background: url('../../assets/images/Banner-Ecommerce.jpeg') top center / cover no-repeat;
+    padding-top: 35%;
+  }
+*/
+.container {
+  @include flex_box_custom(center, center, 0px);
+
+  background-image: url('../../assets/images/Banner-Ecommerce.jpeg');
+  min-height: 750px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  @include flex_box_custom(center, center, 10px);
+
+  flex-direction: column;
+}
+
+.title {
+  font-size: 42px;
+  color: $four_color;
+  font-weight: 400;
+  margin: 15px 0;
+}
+
+.des {
+  color: $third_color;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
