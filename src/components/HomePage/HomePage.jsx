@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomePage from '@components/SaleHomePage/SaleHomePage';
+import Footer from '@components/Footer/Footer';
 
 function HomePage() {
   const { container } = styles;
@@ -20,6 +21,7 @@ function HomePage() {
     // async function fetchData() {
     //   const res = await getProducts();
     //   console.log('prod', res)
+    //   setListProducts(res.contents);
     // }
     // fetchData()
   }, []);
@@ -34,11 +36,7 @@ function HomePage() {
         <HeadingListProducts data={listProducts.slice(0, 2)} />
         <PopularProduct data={listProducts.slice(2, listProducts.length)} />
         <SaleHomePage />
-        <div
-          style={{
-            height: '200px'
-          }}
-        ></div>
+        <Footer />
       </div>
     </>
   );
