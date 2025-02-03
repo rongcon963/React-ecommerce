@@ -25,4 +25,42 @@ axiosClient.interceptors.request.use(
   }
 );
 
+axiosClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (err) => {
+    const originalRequest = err.config;
+
+    if (err.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const refreshToken = Cookies.get('refreshToken');
+      
+      if (!refreshToken) {
+        return Promise.reject(err);
+      }
+
+      try {
+        const res = await axiosClient.post('/refresh-token', {
+          token: refreshToken
+        });
+
+        const newAccessToken = res.data.accessToken || '';
+
+        Cookies.set('token', newAccessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        return axiosClient(originalRequest);
+      } catch (error) {
+        Cookies.remove('token');
+        Cookies.remove('refreshToken');
+
+        return Promise.reject(error);
+      }
+    }
+  }
+);
+
 export default axiosClient;
