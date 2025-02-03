@@ -3,9 +3,10 @@ import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { register } from '@/apis/authService';
+import { register, signIn, getInfo } from '@/apis/authService';
+import Cookies from 'js-cookie';
 
 function Login() {
   const { container, title, boxRememberMe, lostPw } = styles;
@@ -13,28 +14,37 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
 
+  const registerSchema = Yup.object({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+    cfmpassword: Yup.string()
+      .required('Confirm password is required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  })
+
+  const loginSchema = Yup.object({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+  })
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
       cfmpassword: ''
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required('Email is required'),
-      password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Password is required'),
-      cfmpassword: Yup.string()
-        .required('Confirm password is required')
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    }),
+    validationSchema: isRegister ? registerSchema : loginSchema,
     onSubmit: async (values) => {
       if (isLoading) return;
 
-      if (isRegister) {
-        const { email: username, password } = values;
+      const { email: username, password } = values;
+      setIsLoading(true);
 
-        setIsLoading(true);
+      if (isRegister) {
         await register({ username, password })
           .then((res) => {
             toast.success(res.data.message);
@@ -45,13 +55,34 @@ function Login() {
             setIsLoading(false);
           });
       }
-    }
+      
+      if (!isRegister) {
+        await signIn({ username, password })
+          .then((res) => {
+            setIsLoading(false);
+            const { id, token, refreshToken } = res.data;
+
+            Cookies.set('token', token);
+            Cookies.set('refreshToken', refreshToken);
+
+            console.log(res);
+          })
+          .catch((error) => {
+            toast.error(error.response.data.message);
+            setIsLoading(false);
+          });
+      }
+    },
   });
 
   const handleToggle = () => {
     setIsRegister(!isRegister);
     formik.resetForm();
   };
+  
+  useEffect(() => {
+    getInfo();
+  }, [])
 
   return (
     <div className={container}>
@@ -84,13 +115,14 @@ function Login() {
 
         {!isRegister && (
           <div className={boxRememberMe}>
-            <input type='checkbox' />
-            <span>Remember me</span>
+            <input type='checkbox' id='rememberMe' />
+            <label htmlFor="rememberMe">Remember me</label>
+            {/* <span>Remember me</span> */}
           </div>
         )}
 
         <Button
-          content={isLoading ? 'Loading...' : isRegister ? 'REGISTER' : 'LOGIN'}
+          content={isLoading ? 'LOADING...' : isRegister ? 'REGISTER' : 'LOGIN'}
           type='submit'
         />
       </form>
