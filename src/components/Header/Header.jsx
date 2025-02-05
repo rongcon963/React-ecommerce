@@ -3,12 +3,9 @@ import { dataBoxIcon, dataMenu } from './constants';
 import Menu from './Menu/Menu';
 import styles from './styles.module.scss';
 import Logo from '@icons/images/Logo-retina.png';
-import reloadIcon from '@icons/svgs/reloadIcon.svg';
 import { TfiReload } from "react-icons/tfi";
 import { BsHeart } from "react-icons/bs";
 import { PiShoppingCart } from "react-icons/pi";
-import heartIcon from '@icons/svgs/heart.svg';
-import cartIcon from '@icons/svgs/cartIcon.svg';
 import useScrollHandling from '@/hooks/useScrollHandling';
 import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
@@ -28,7 +25,7 @@ function Header() {
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  const { isOpen, setIsOpen, setType } = useContext(SideBarContext);
+  const { setIsOpen, setType } = useContext(SideBarContext);
 
   const handleOpenSideBar = (type) => {
     setIsOpen(true);
@@ -63,9 +60,7 @@ function Header() {
 
           <div className={containerMenu}>
             {dataMenu.slice(0, 3).map((item, index) => {
-              return (
-                <Menu key={index} content={item.content} href={item.href} />
-              );
+              return <Menu content={item.content} href={item.href} />;
             })}
           </div>
         </div>
@@ -82,14 +77,7 @@ function Header() {
         <div className={containerBox}>
           <div className={containerMenu}>
             {dataMenu.slice(3, dataMenu.length).map((item, index) => {
-              return (
-                <Menu
-                  key={index}
-                  content={item.content}
-                  href={item.href}
-                  setIsOpen={setIsOpen}
-                />
-              );
+              return <Menu content={item.content} href={item.href} />;
             })}
           </div>
 

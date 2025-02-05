@@ -3,16 +3,20 @@ import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { register, signIn, getInfo } from '@/apis/authService';
+import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/storeProvider';
 
 function Login() {
   const { container, title, boxRememberMe, lostPw } = styles;
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
+  const { setIsOpen } = useContext(SideBarContext);
+  const { setUserId } = useContext(StoreContext);
 
   const registerSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -61,11 +65,14 @@ function Login() {
           .then((res) => {
             setIsLoading(false);
             const { id, token, refreshToken } = res.data;
+            setUserId(id);
 
             Cookies.set('token', token);
             Cookies.set('refreshToken', refreshToken);
+            Cookies.set('userId', id);
 
-            console.log(res);
+            toast.success('Sign in successfully!');
+            setIsOpen(false);
           })
           .catch((error) => {
             toast.error(error.response.data.message);
@@ -79,10 +86,6 @@ function Login() {
     setIsRegister(!isRegister);
     formik.resetForm();
   };
-  
-  useEffect(() => {
-    getInfo();
-  }, [])
 
   return (
     <div className={container}>
