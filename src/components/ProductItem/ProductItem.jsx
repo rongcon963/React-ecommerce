@@ -5,7 +5,7 @@ import cartIcon from '@icons/svgs/cartIcon.svg';
 import eyeIcon from '@icons/svgs/eyeIcon.svg';
 import cls from 'classnames';
 import Button from '@components/Button/Button';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 
 function ProductItem({
@@ -16,7 +16,10 @@ function ProductItem({
   details,
   isHomePage = true
 }) {
-  const { isShowGrid } = useContext(OurShopContext);
+  // const { isShowGrid } = useContext(OurShopContext);
+  const [sizeChoose, setSizeChoose] = useState('');
+  const ourShopStore = useContext(OurShopContext);
+  const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
 
   const {
     boxImg,
@@ -33,7 +36,25 @@ function ProductItem({
     containerItem,
     leftBtn,
     largeImg,
+    isActiveSize,
+    btnClear
   } = styles;
+
+  const handleChooseSize = (size) => {
+    setSizeChoose(size);
+  };
+
+  const handleClearSize = () => {
+    setSizeChoose('');
+  };
+  
+  useEffect(() => {
+    if (isHomePage) {
+      setIsShowGrid(true);
+    } else {
+      setIsShowGrid(ourShopStore?.isShowGrid);
+    }
+  }, [isHomePage, ourShopStore?.isShowGrid]);
 
   return (
     <div className={isShowGrid ? '' : containerItem}>
@@ -62,11 +83,23 @@ function ProductItem({
           <div className={boxSize}>
             {details.size.map((item, index) => {
               return (
-                <div key={index} className={size}>
+                <div
+                  key={index}
+                  className={cls(size, {
+                    [isActiveSize]: sizeChoose === item.name
+                  })}
+                  onClick={() => handleChooseSize(item.name)}
+                >
                   {item.name}
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {sizeChoose && (
+          <div className={btnClear} onClick={() => handleClearSize()}>
+            Clear
           </div>
         )}
 
@@ -98,7 +131,9 @@ function ProductItem({
           ${price}
         </div>
         {!isHomePage && (
-          <div className={cls(boxBtn, { [leftBtn]: !isHomePage && !isShowGrid })}>
+          <div
+            className={cls(boxBtn, { [leftBtn]: !isHomePage && !isShowGrid })}
+          >
             <Button content={'ADD TO CART'} />
           </div>
         )}
