@@ -3,9 +3,9 @@ import { dataBoxIcon, dataMenu } from './constants';
 import Menu from './Menu/Menu';
 import styles from './styles.module.scss';
 import Logo from '@icons/images/Logo-retina.png';
-import { TfiReload } from "react-icons/tfi";
-import { BsHeart } from "react-icons/bs";
-import { PiShoppingCart } from "react-icons/pi";
+import { TfiReload } from 'react-icons/tfi';
+import { BsHeart } from 'react-icons/bs';
+import { PiShoppingCart } from 'react-icons/pi';
 import useScrollHandling from '@/hooks/useScrollHandling';
 import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
@@ -19,18 +19,20 @@ function Header() {
     containerBox,
     container,
     fixedHeader,
-    topHeader
+    topHeader,
+    boxCard,
+    quantity
   } = styles;
 
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  const { setIsOpen, setType } = useContext(SideBarContext);
+  const { setIsOpen, setType, listProductCart } = useContext(SideBarContext);
 
   const handleOpenSideBar = (type) => {
     setIsOpen(true);
     setType(type);
-  }
+  };
 
   useEffect(() => {
     // if (scrollPosition > 80) {
@@ -94,12 +96,16 @@ function Header() {
               }}
               onClick={() => handleOpenSideBar('wishlist')}
             />
-            <PiShoppingCart
-              style={{
-                fontSize: '25px'
-              }}
-              onClick={() => handleOpenSideBar('cart')}
-            />
+            <div className={boxCard} onClick={() => handleOpenSideBar('cart')}>
+              <PiShoppingCart
+                style={{
+                  fontSize: '25px'
+                }}
+                //onClick={() => handleOpenSideBar('cart')}
+              />
+
+              <div className={quantity}>{listProductCart.length}</div>
+            </div>
           </div>
         </div>
       </div>

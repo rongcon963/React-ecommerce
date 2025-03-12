@@ -83,7 +83,7 @@ export const OurShopProvider = ({ children }) => {
         console.log(error);
         setIsLoading(false);
       });
-  }, [sortId, showId]);
+  }, []);
 
   return (
     <OurShopContext.Provider value={values}>{children}</OurShopContext.Provider>

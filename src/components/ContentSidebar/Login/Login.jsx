@@ -15,7 +15,7 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
-  const { setIsOpen } = useContext(SideBarContext);
+  const { setIsOpen, handleGetListProductsCart } = useContext(SideBarContext);
   const { setUserId } = useContext(StoreContext);
 
   const registerSchema = Yup.object({
@@ -73,6 +73,7 @@ function Login() {
 
             toast.success('Sign in successfully!');
             setIsOpen(false);
+            handleGetListProductsCart(id, 'cart');
           })
           .catch((error) => {
             toast.error(error.response.data.message);

@@ -4,10 +4,10 @@ import { OurShopContext } from '@contexts/OurShopProvider';
 import { useContext } from 'react';
 import styles from '../styles.module.scss';
 import Button from '@components/Button/Button';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 function ListProducts() {
-  const { containerProduct, sectionListProduct, rotate } = styles;
+  const { containerProduct, sectionListProduct } = styles;
   const { products, isShowGrid, isLoading, handleLoadMore, total, isLoadMore } =
     useContext(OurShopContext);
 
@@ -41,7 +41,7 @@ function ListProducts() {
                 <Button
                   content={
                     isLoadMore ? (
-                      <AiOutlineLoading3Quarters className={rotate} />
+                      <LoadingTextCommon />
                     ) : (
                       'LOAD MORE PRODUCT'
                     )
