@@ -10,7 +10,8 @@
   flex-direction: column;
 
   background-color: #fafafa;
-  padding: 35px 0;
+  padding: 2.3vw 0;
+  margin-bottom: 2.3vw;
 
   .steps {
     @include flex_box_custom(center, center, 30px);
@@ -28,7 +29,7 @@
     font-weight: 400;
     padding-top: 35px;
   }
-  
+
   .stepper {
     @include flex_box_custom(center, center, 10px);
     text-transform: uppercase;
@@ -57,6 +58,236 @@
 
     .isDisableText {
       color: #9a9a9a;
+    }
+  }
+}
+
+.containerContents {
+  @include flex_box_custom(space-between, flex-start, 30px);
+
+  .cartTable {
+    // width: 100%;
+    max-width: 740px;
+    margin: 0 auto;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e1e1;
+
+    position: relative;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+
+      thead {
+        tr {
+          th {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ccc;
+            font-size: 14px;
+            font-weight: 300;
+            text-align: center;
+          }
+
+          th:first-child {
+            padding-left: 0;
+            text-align: left;
+          }
+
+          th:last-child {
+            padding-right: 0;
+            text-align: right;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            padding: 15px;
+            vertical-align: top;
+            color: $secondary_color;
+            font-size: 14px;
+            font-weight: 300;
+
+            &:nth-child(1) {
+              display: flex;
+              padding-left: 0;
+              color: $four_color;
+              font-size: 16px;
+
+              img {
+                width: calc(100px - 0.71em);
+                margin-right: 10px;
+                border-radius: 2px;
+              }
+
+              div {
+                flex-grow: 1;
+
+                p:first-child {
+                  margin: 0;
+                  // Truncate String with Ellipsis
+                  width: 250px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+
+                p:last-child {
+                  font-size: 0.9em;
+                  color: #777;
+                }
+              }
+            }
+
+            &:nth-child(2) {
+              font-size: 24px;
+            }
+
+            &:nth-child(4) {
+              color: $third_color;
+            }
+
+            &:nth-child(5) {
+              select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 1px;
+                color: $secondary_color;
+              }
+            }
+
+            &:last-child {
+              text-align: right;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .containerRight {
+    flex-grow: 1;
+  }
+
+  .containerSummary {
+    padding: 25px;
+    border: 2px solid #333;
+
+    .title {
+      font-size: 14px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e1e1e1;
+      color: $primary_color;
+    }
+
+    .boxTotal {
+      @include flex_box_custom(space-between, center, 0px);
+      margin: 25px 0;
+    }
+
+    .subTotal {
+      color: $third_color;
+
+      .price {
+        color: $secondary_color;
+        font-weight: 300;
+        font-size: 14px;
+      }
+    }
+
+    .totals {
+      color: $four_color;
+      font-size: 20px;
+    }
+
+    .space {
+      height: 10px;
+    }
+  }
+
+  .containerMethod {
+    padding: 25px 0;
+    position: relative;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    margin-top: 45px;
+
+    .titleMethod {
+      position: absolute;
+      top: -8px;
+      transform: translateX(-50%);
+      left: 50%;
+      background-color: #fff;
+      padding: 0 10px;
+      text-transform: uppercase;
+      font-size: 14px;
+
+      span {
+        color: #2e7d32;
+      }
+    }
+
+    .boxImgMethod {
+      @include flex_box_custom(center, center, 10px);
+    }
+
+    .imgMethod {
+      border: 1px solid #e1e1e1;
+      // display: inline-block;
+      // Option 1:
+      // max-width: 50px;
+      // height: auto;
+      // Option 2:
+      width: 50px;
+      height: 34px;
+      border-radius: 5px;
+    }
+  }
+
+  .textSecure {
+    text-align: center;
+    font-size: 14px;
+    color: $third_color;
+    margin-top: 10px;
+  }
+
+  .boxFooter {
+    @include flex_box_custom(space-between, center, 0px);
+    margin-top: 15px;
+
+    .boxCoupon {
+      @include flex_box_custom(flex-start, center, 0px);
+
+      input {
+        border: 1px solid #e1e1e1;
+        padding: 8px 15px;
+        width: 300px;
+        outline: none;
+      }
+
+      button {
+        height: 36px;
+        border-radius: 0px;
+        padding: 0px 10px;
+        font-size: 12px;
+        width: 36px;
+      }
+    }
+
+    .boxBtnDelete {
+      button {
+        height: 36px;
+        font-size: 12px;
+        padding: 0px 30px;
+      }
+
+      .boxBtnDeleteIcon {
+        font-size: 16px;
+      }
     }
   }
 }
