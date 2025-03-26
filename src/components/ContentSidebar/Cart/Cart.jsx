@@ -20,7 +20,7 @@ function Cart() {
     boxEmpty,
     textEmpty,
     boxBtnEmpty,
-    containerListItem,
+    containerListItem
   } = styles;
   const navigate = useNavigate();
   const { listProductCart, isLoading, setIsOpen } = useContext(SideBarContext);
@@ -33,6 +33,11 @@ function Cart() {
   const subTotal = listProductCart.reduce((acc, item) => {
     return acc + item.total;
   }, 0);
+
+  const handleNavigateToCart = () => {
+    navigate('/cart');
+    setIsOpen(false);
+  };
 
   return (
     <div
@@ -76,7 +81,7 @@ function Cart() {
             </div>
 
             <div className={boxBtn}>
-              <Button content={'VIEW CART'} />
+              <Button content={'VIEW CART'} onClick={handleNavigateToCart} />
               <Button content={'CHECKOUT'} isPrimary={false} />
             </div>
           </div>
@@ -85,7 +90,11 @@ function Cart() {
         <div className={boxEmpty}>
           <div className={textEmpty}>No products in the cart.</div>
           <div className={boxBtnEmpty}>
-            <Button content={'RETURN TO SHOP'} isPrimary={false} onClick={handleNavigateToShop} />
+            <Button
+              content={'RETURN TO SHOP'}
+              isPrimary={false}
+              onClick={handleNavigateToShop}
+            />
           </div>
         </div>
       )}

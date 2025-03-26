@@ -1,40 +1,9 @@
 import SelectBox from '@pages/OurShop/components/SelectBox';
 import styles from '../../styles.module.scss';
+import LoadingCart from '../Loading';
 
-function CartTable() {
+function CartTable({ listProductCart, getData, isLoading, getDataDelete }) {
   const { cartTable } = styles;
-  const cartItem = [
-    {
-      id: 1,
-      name: 'AmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmetAmet',
-      price: 1879.99,
-      sku: 87654,
-      size: 'M',
-      quantity: 1,
-      image:
-        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image_1.jpeg'
-    },
-    {
-      id: 2,
-      name: 'Amet',
-      price: 1879.99,
-      sku: 87654,
-      size: 'M',
-      quantity: 1,
-      image:
-        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image_1.jpeg'
-    },
-    {
-      id: 3,
-      name: 'Amet',
-      price: 1879.99,
-      sku: 87654,
-      size: 'M',
-      quantity: 1,
-      image:
-        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image_1.jpeg'
-    }
-  ];
 
   const showOptions = [
     { label: '1', value: '1' },
@@ -43,11 +12,19 @@ function CartTable() {
     { label: '4', value: '4' },
     { label: '5', value: '5' },
     { label: '6', value: '6' },
-    { label: '7', value: '7' },
+    { label: '7', value: '7' }
   ];
 
-  const getValueSelect = (value, type) => {
-    console.log(value)
+  const getValueSelect = (userId, productId, quantity, size) => {
+    const data = {
+      userId,
+      productId,
+      quantity,
+      size,
+      isMultiple: true
+    };
+
+    getData(data);
   };
 
   return (
@@ -64,10 +41,10 @@ function CartTable() {
           </tr>
         </thead>
         <tbody>
-          {cartItem.map((item) => (
+          {listProductCart.map((item) => (
             <tr key={item.id}>
               <td className={styles.product}>
-                <img src={item.image} alt={item.name} />
+                <img src={item.images[0]} alt={item.name} />
                 <div>
                   <p>{item.name}</p>
                   <p>Size: {item.size}</p>
@@ -93,23 +70,20 @@ function CartTable() {
               <td>
                 <SelectBox
                   options={showOptions}
-                  getValue={getValueSelect}
-                  type={'show'}
-                />
-                {/* <SelectBox
-                  options={showOptions}
                   getValue={(e) =>
                     getValueSelect(item.userId, item.productId, e, item.size)
                   }
-                  type='show'
+                  type={'show'}
                   defaultValue={item.quantity}
-                /> */}
+                />
               </td>
               <td>${(item.price * item.quantity).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {isLoading && <LoadingCart />}
     </div>
   );
 }
