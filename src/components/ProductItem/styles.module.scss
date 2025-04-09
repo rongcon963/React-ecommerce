@@ -49,6 +49,8 @@
     height: 40px;
     @include flex_box_custom(center, center, 0px);
 
+    cursor: pointer;
+
     img {
       width: 18px;
       height: 18px;

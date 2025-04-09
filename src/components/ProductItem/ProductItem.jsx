@@ -1,8 +1,8 @@
 import styles from './styles.module.scss';
-import reloadIcon from '@icons/svgs/reloadIcon.svg';
-import heartIcon from '@icons/svgs/heart.svg';
-import cartIcon from '@icons/svgs/cartIcon.svg';
-import eyeIcon from '@icons/svgs/eyeIcon.svg';
+// import reloadIcon from '@icons/svgs/reloadIcon.svg';
+// import heartIcon from '@icons/svgs/heart.svg';
+// import cartIcon from '@icons/svgs/cartIcon.svg';
+// import eyeIcon from '@icons/svgs/eyeIcon.svg';
 import cls from 'classnames';
 import Button from '@components/Button/Button';
 import { useContext, useEffect, useState } from 'react';
@@ -12,6 +12,10 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import { ToastContext } from '@contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
+import { CiHeart } from 'react-icons/ci';
+import { TfiReload } from 'react-icons/tfi';
+import { LiaEyeSolid } from 'react-icons/lia';
 
 function ProductItem({
   src,
@@ -26,7 +30,8 @@ function ProductItem({
   const ourShopStore = useContext(OurShopContext);
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
   const userId = Cookies.get('userId');
-  const { setIsOpen, setType, handleGetListProductsCart } = useContext(SideBarContext);
+  const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
+    useContext(SideBarContext);
   const { toast } = useContext(ToastContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -93,6 +98,12 @@ function ProductItem({
       });
   };
 
+  const handleShowDetailProductSidebar = () => {
+    setIsOpen(true);
+    setType('detail');
+    setDetailProduct(details);
+  };
+
   useEffect(() => {
     if (isHomePage) {
       setIsShowGrid(true);
@@ -109,16 +120,20 @@ function ProductItem({
 
         <div className={showFncWhenHover}>
           <div className={boxIcon}>
-            <img src={cartIcon} alt='' />
+            {/* <img src={cartIcon} alt='' /> */}
+            <LiaShoppingBagSolid style={{ fontSize: '20px' }} />
           </div>
           <div className={boxIcon}>
-            <img src={heartIcon} alt='' />
+            {/* <img src={heartIcon} alt='' /> */}
+            <CiHeart style={{ fontSize: '25px' }} />
           </div>
           <div className={boxIcon}>
-            <img src={reloadIcon} alt='' />
+            {/* <img src={reloadIcon} alt='' /> */}
+            <TfiReload style={{ fontSize: '20px' }} />
           </div>
-          <div className={boxIcon}>
-            <img src={eyeIcon} alt='' />
+          <div className={boxIcon} onClick={handleShowDetailProductSidebar}>
+            {/* <img src={eyeIcon} alt='' /> */}
+            <LiaEyeSolid style={{ fontSize: '23px' }} />
           </div>
         </div>
       </div>
