@@ -5,11 +5,20 @@
   @include flex_box_custom(space-between, unset, 0px);
 
   flex-direction: column;
-  padding: 30px 20px 0 20px;
-  height: 95%;
+  padding: 20px 20px 0 30px;
+  height: 97%;
 
   .total {
     @include flex_box_custom(space-between, center, 0px);
+
+    font-size: 14px;
+    color: $four_color;
+    font-weight: 300;
+
+    .price {
+      font-size: 16px;
+      font-weight: 400;
+    }
   }
 
   .boxBtn {

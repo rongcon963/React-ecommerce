@@ -20,7 +20,8 @@ function Cart() {
     boxEmpty,
     textEmpty,
     boxBtnEmpty,
-    containerListItem
+    containerListItem,
+    price
   } = styles;
   const navigate = useNavigate();
   const { listProductCart, isLoading, setIsOpen } = useContext(SideBarContext);
@@ -77,7 +78,7 @@ function Cart() {
           <div>
             <div className={total}>
               <p>SUBTOTAL:</p>
-              <p>${subTotal}</p>
+              <p className={price}>${subTotal.toFixed(2)}</p>
             </div>
 
             <div className={boxBtn}>

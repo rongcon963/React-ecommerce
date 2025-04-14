@@ -1,5 +1,4 @@
 import styles from '../styles.module.scss';
-import cls from 'classnames';
 
 function SelectBox({ options, getValue, type, defaultValue }) {
   const { selectBox } = styles;
