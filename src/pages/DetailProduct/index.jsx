@@ -7,6 +7,10 @@ import { TfiReload } from 'react-icons/tfi';
 import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import AccordionMenu from '@components/AccordionMenu';
 import { useState } from 'react';
+import InformationProduct from '@pages/DetailProduct/components/information';
+import ReviewProduct from '@pages/DetailProduct/components/Review';
+import Footer from '@components/Footer/Footer';
+import SliderCommon from '@components/SliderCommon/SliderCommon';
 
 function DetailProduct() {
   const {
@@ -34,18 +38,72 @@ function DetailProduct() {
     {
       id: 1,
       titleMenu: 'ADDITIONAL INFORMATION',
-      content: <div>CONTENT</div>
+      content: <InformationProduct />
     },
     {
       id: 2,
       titleMenu: 'REVIEWS (0)',
-      content: <div>CONTENT REVIEW</div>
+      content: <ReviewProduct />
     }
   ];
 
   const handleSetMenuSelected = (id) => {
     setMenuSelected(id);
-  }
+  };
+
+  const tempData = [
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-17.2-min.jpg',
+      name: 'Product Name 1',
+      price: '1000',
+      size: [
+        {
+          name: 'L'
+        },
+        {
+          name: 'M'
+        },
+        {
+          name: 'S'
+        }
+      ]
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-17.2-min.jpg',
+      name: 'Product Name 1',
+      price: '1000',
+      size: [
+        {
+          name: 'L'
+        },
+        {
+          name: 'M'
+        },
+        {
+          name: 'S'
+        }
+      ]
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-17.2-min.jpg',
+      name: 'Product Name 1',
+      price: '1000',
+      size: [
+        {
+          name: 'L'
+        },
+        {
+          name: 'M'
+        },
+        {
+          name: 'S'
+        }
+      ]
+    }
+  ];
 
   return (
     <div>
@@ -158,8 +216,16 @@ function DetailProduct() {
               })}
             </div>
           </div>
+
+          <div>
+            <h2>Related Product</h2>
+
+            <SliderCommon data={tempData} isProductItem showItem={4} />
+          </div>
         </MainLayout>
       </div>
+
+      <Footer />
     </div>
   );
 }
